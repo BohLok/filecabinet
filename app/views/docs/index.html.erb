@@ -2,6 +2,15 @@
 <p>Find me in app/views/docs/index.html.erb</p>
 
 <% @docs.each do |d| %>
-  <%= d.title %>
-  <%= d.content %>
+  <div class="card">
+    <div class="card-header">
+      <%= link_to d.title, doc_path(d) %>
+    </div>
+    <div class="card-block">
+      <p class="card-text"><%= d.content %></p>
+    </div>
+  </div>
+  <hr>
 <% end %> 
+
+<%= link_to "Add Document", new_doc_path %>

@@ -1,0 +1,14 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <%= link_to "Home", root_path, class: "nav-item nav-link" %>
+      <% if current_user %>
+        <%= link_to("Documents", docs_path, class: "nav-item nav-link") %>
+        <%= link_to("Logout", destroy_user_session_path, method: 'delete', class: "nav-item nav-link") %>
+      <% else %>  
+        <%= link_to("Sign up", new_user_registration_path, class: "nav-item nav-link") %>
+        <%= link_to("Login", new_user_session_path, class: "nav-item nav-link") %>
+      <% end %>
+    </div>
+  </div>
+</nav>

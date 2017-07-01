@@ -1,25 +1,29 @@
 class DocsController < ApplicationController
   before_action :set_doc, only: [:show, :edit, :delete, :update, :destroy]
-
+  before_action :authenticate_user!
+  
   def index
-    @docs = Doc.all
+    @docs = current_user.docs
   end
 
   def show
   end
 
   def new
-      @doc = Doc.new
+    if current_user
+        @doc = current_user.docs.build
+    else
+      redirect_to new_user_session_path, notice: 'You have to login first!'
+    end
   end
 
   def create
-    @doc = Doc.new(secure_params)
+    @doc = current_user.docs.build(secure_params)
     if @doc.save
       redirect_to @doc, notice: "Document was successfully created!"
     else
       render new
     end
-
   end
 
   def delete
@@ -32,6 +36,12 @@ class DocsController < ApplicationController
   end
 
   def update
+    if @doc.update(secure_params)
+      redirect_to @doc, notice: "Document was successfully updated"
+    else
+      render edit
+    end
+
   end
 
   private
